@@ -1,0 +1,31 @@
+
+#noWait-logo { 
+    width: 25%; 
+    height: auto; 
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+#input-box { 
+    width: 60%; 
+    height: 37%;
+    display: block; 
+    margin-top: 10px;
+    margin-left: auto; 
+    margin-right: auto; 
+    position: static; 
+}
+
+#input-option-one { 
+
+    border-bottom: dotted; 
+    border-bottom-color: #dadada; 
+
+
+}
+
+#proceed-button{ 
+    margin-top: -35px;
+    position: static;
+}
