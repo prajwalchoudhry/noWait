@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="backgrounds.js"></script>
+        <script src="tsaRequest.js" type="text/javascript"></script>
+              
     </head>
 
     <img src="noWait.png" id="noWait-logo">
@@ -34,9 +36,9 @@
                     </div>
                     <div class="control column has-text-centered">
                         <p type="time" class="control has-icons-left has-icons-right">
-                            <input class="input" type="text" placeholder="Airport Code">
+                            <input class="input" type="text" id = "airportInput" placeholder="Airport Code">
                                 <span class="icon is-small is-left">
-                                    <i class="fa fa-passport"></i>
+                                    <i class="fa fa-plane"></i>
                                 </span>
                         </p>
                     </div>
@@ -45,7 +47,7 @@
 
             <div class="field is-grouped column is-centered">
                 <div class="column has-text-centered" id ="proceed-button">
-                    <button class="button is-success is-normal">Proceed</button>
+                    <button class="button is-success is-normal" onclick="processInput()">Proceed</button>
                 </div>
                     
 

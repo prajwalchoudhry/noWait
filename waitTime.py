@@ -3,18 +3,38 @@
 import requests
 from xml.etree import ElementTree
 
+# Functions that will be used by the web application in order to display the appropiate wait time for the airport
 
-# TSA Waitimes API URL 
-api_url = "https://apps.tsa.dhs.gov/MyTSAWebService/GetConfirmedWaitTimes.ashx"
+def getWaitTime ():
 
-api_parameters = {}
-api_parameters['ap'] = "DEN" 
-api_parameters['output'] = "XML"
+    api_url = "https://apps.tsa.dhs.gov/MyTSAWebService/GetConfirmedWaitTimes.ashx"
 
-r = requests.get(url = api_url, params = api_parameters)
-tree = ElementTree.fromstring(r.content)
+    api_parameters = {}
+    api_parameters['ap'] = "DEN" 
+    api_parameters['output'] = "XML"
 
-token = tree.find("WaitTime")
-estimatedWait = token.find("WaitTimeIndex")
+    r = requests.get(url = api_url, params = api_parameters)
+    tree = ElementTree.fromstring(r.content)
 
-print(estimatedWait.text)
+    token = tree.find("WaitTime")
+    estimatedWait = token.find("WaitTimeIndex")
+
+    return estimatedWait.text
+
+def calculateWaitTime():
+
+    currentWaitIndex = getWaitTime()
+    
+    if currentWaitIndex == 0: 
+        return 10; 
+
+    else: 
+        return int(currentWaitIndex) * int('10'); 
+
+
+
+
+
+
+time = calculateWaitTime()
+print(time); 
