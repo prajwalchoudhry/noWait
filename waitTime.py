@@ -4,27 +4,45 @@ from flask import Flask, request, render_template
 from xml.etree import ElementTree
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder = 'static', template_folder = 'templates')
 
 @app.route('/')
 def my_form():
     return render_template('index.html')
 
-@app.route('/', methods=['POST'])
+@app.route('/waitTime', methods=['POST'])
 def my_form_post():
     text = request.form['airportCode']
     processed_text = text.upper()
-    print(processed_text); 
-    return processed_text
+    
+    estimatedWaitIndex = getWaitTime(processed_text)
+    currentLowerBound = calculateLowerBound(estimatedWaitIndex)
+    currentUpperBound = calculateUpperBound(estimatedWaitIndex)
+
+    green = False 
+    yellow = False 
+    red = False 
+
+    if currentUpperBound <= 10: 
+        green = True
+
+    elif currentUpperBound > 10 and currentUpperBound <= 30: 
+        yellow = True 
+
+    else: 
+        red = True 
+
+    return render_template('waitTime.html', lowerBound = currentLowerBound, upperBound = currentUpperBound, green = green, yellow = yellow, red = red)
+    
 
 # Functions that will be used by the web application in order to display the appropiate wait time for the airport
 
-def getWaitTime ():
+def getWaitTime (airportCodeIn):
 
     api_url = "https://apps.tsa.dhs.gov/MyTSAWebService/GetConfirmedWaitTimes.ashx"
 
     api_parameters = {}
-    api_parameters['ap'] = "DEN" 
+    api_parameters['ap'] = airportCodeIn 
     api_parameters['output'] = "XML"
 
     r = requests.get(url = api_url, params = api_parameters)
@@ -35,18 +53,23 @@ def getWaitTime ():
 
     return estimatedWait.text
 
-def calculateWaitTime():
+def calculateLowerBound(estimatedWaitIndexIn): 
 
-    currentWaitIndex = getWaitTime()
-    
-    if currentWaitIndex == 0: 
-        return int('10'); 
+    if (estimatedWaitIndexIn == 0): 
+        return int('0')
 
     else: 
-        return int(currentWaitIndex) * int('10'); 
+        return int(estimatedWaitIndexIn) * int('10')
+
+def calculateUpperBound(estimatedWaitIndexIn): 
+
+    if (estimatedWaitIndexIn == 0): 
+        return int('10')
+
+    else: 
+        return (int(estimatedWaitIndexIn) * int('10')) + int('10')
 
 
 # Beginning of Main 
-
-my_form()
-my_form_post()
+if __name__ == "__main__":
+    app.run()

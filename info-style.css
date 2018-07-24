@@ -1,0 +1,35 @@
+#time-display-box { 
+
+    width: 1000px; 
+    height: 550px;
+    
+    margin-left: auto; 
+    margin-right: auto; 
+
+    margin-top: 50px; 
+    
+}
+
+#security-graphic-container{ 
+    width: 250px; 
+    margin-top: -275px;
+}
+
+#security-graphic { 
+    width: 250px; 
+    height: auto; 
+}
+
+#wait-time-information{ 
+    width: 600px;
+    margin-right: 40px;
+    margin-top: -275px; 
+  
+    text-align: center;
+   
+}
+
+#get-request-output{ 
+    font-size: 2.4em;
+}
+
